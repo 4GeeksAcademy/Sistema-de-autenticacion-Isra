@@ -1,0 +1,66 @@
+import React, { useContext, useState } from "react";
+import { Context } from "../store/appContext";
+
+export const Login = () => {
+    const { store, actions } = useContext(Context); 
+    const [login, setLogin] = useState({
+        email: "",
+        password: ""
+    });
+
+    const inputValue = (e) => {
+        const { name, value } = e.target;
+        setLogin({ ...login, [name]: value });
+    };
+
+    const submitForm = (e) => {
+        e.preventDefault();
+        console.log(login);
+        actions.login(login.email, login.password);
+
+    };
+    return (
+        <div className="container">
+            <h1>Login</h1>
+            <form onSubmit={(event)=>submitForm(event)}>
+                <div className="mb-3">
+                    <label htmlFor="exampleInputEmail1" className="form-label">
+                        Email address
+                    </label>
+                    <input type="email"
+                     className="form-control" 
+                     id="exampleInputEmail1" 
+                     aria-describedby="emailHelp"
+                    onChange={inputValue}
+                    name="email"
+                    value={login.email}
+                      />
+                    <div id="emailHelp" className="form-text">
+                        We'll never share your email with anyone else.
+                    </div>
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="exampleInputPassword1" className="form-label">
+                        Password
+                    </label>
+                    <input type="password" 
+                    className="form-control" 
+                    id="exampleInputPassword1" 
+                    onChange={inputValue}
+                    name="password"
+                    value={login.password}
+                    />
+                </div>
+                <div className="mb-3 form-check">
+                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                    <label className="form-check-label" htmlFor="exampleCheck1">
+                        Remember me
+                    </label>
+                </div>
+                <button type="submit" className="btn btn-primary">
+                    Submit
+                </button>
+            </form>
+        </div>
+    );
+};    
