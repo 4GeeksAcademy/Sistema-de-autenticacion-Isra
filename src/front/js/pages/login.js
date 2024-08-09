@@ -1,8 +1,10 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
     const { store, actions } = useContext(Context); 
+    const navigate = useNavigate();
     const [login, setLogin] = useState({
         email: "",
         password: ""
@@ -13,10 +15,17 @@ export const Login = () => {
         setLogin({ ...login, [name]: value });
     };
 
-    const submitForm = (e) => {
+    const submitForm = async(e) => {
         e.preventDefault();
         console.log(login);
-        actions.login(login.email, login.password);
+        const loginOK= await actions.login(login.email, login.password);
+        setLogin({
+            email: "",
+            password: ""
+        });
+        if(loginOK===true){
+            navigate("/homePrivado");
+        }
 
     };
     return (

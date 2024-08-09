@@ -43,13 +43,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 							id: data.id,
 							email: data.email
 						} });
-
 						console.log("Usuario logueado correctamente",data);
+						return true;	
 					}else{
 						console.log("Error al loguear el usuario", errorData.message);
+						return false;
 					}
 				}catch(error){
 					console.log("Error al loguear el usuario",error);
+					return false;
 				}
 			},
 		}
